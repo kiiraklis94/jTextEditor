@@ -24,17 +24,24 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+
 import javax.swing.UIManager;
 import javax.swing.JToolBar;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.Box;
 import javax.swing.JToggleButton;
+import javax.swing.DefaultComboBoxModel;
 
 public class Main {
 
 	private JFrame frmJtexteditor;
+	private GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	private String[] fonts = e.getAvailableFontFamilyNames();
+	private static int[] fontSizes = null; //Find a way to populate font sizes combobox
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -54,6 +61,7 @@ public class Main {
 				}
 			}
 		});
+
 	}
 
 	/**
@@ -115,13 +123,13 @@ public class Main {
 		Component horizontalGlue = Box.createHorizontalGlue();
 		toolBar.add(horizontalGlue);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox comboBox = new JComboBox(fonts);
 		toolBar.add(comboBox);
 		comboBox.setToolTipText("Font");
 		
 		Component horizontalStrut = Box.createHorizontalStrut(5);
 		toolBar.add(horizontalStrut);
-		
+
 		JComboBox comboBox_1 = new JComboBox();
 		toolBar.add(comboBox_1);
 		comboBox_1.setToolTipText("Font Size");
