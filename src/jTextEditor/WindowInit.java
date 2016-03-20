@@ -125,6 +125,7 @@ public class WindowInit {
 		
 		Component horizontalStrut_5 = Box.createHorizontalStrut(5);
 		toolBar.add(horizontalStrut_5);
+		fontsComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		toolBar.add(fontsComboBox);
 		fontsComboBox.setToolTipText("Font");
@@ -132,6 +133,7 @@ public class WindowInit {
 	
 		Component horizontalStrut = Box.createHorizontalStrut(5);
 		toolBar.add(horizontalStrut);
+		sizesComboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		sizesComboBox.setSelectedItem(getDefault("FontSize"));
 		sizesComboBox.setToolTipText("Font Size");
@@ -177,6 +179,7 @@ public class WindowInit {
 		toolBar.add(horizontalStrut_4);
 		
 		JButton btnApplyButton = new JButton("Apply");
+		btnApplyButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnApplyButton.setIcon(new ImageIcon(WindowInit.class.getResource("/icons/apply.png")));
 		btnApplyButton.setForeground(Color.BLACK);
 		btnApplyButton.setVerticalAlignment(SwingConstants.BOTTOM);
