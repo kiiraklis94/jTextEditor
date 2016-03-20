@@ -23,6 +23,8 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.undo.UndoManager;
+
 import java.awt.Color;
 
 public class WindowInit {
@@ -43,6 +45,8 @@ public class WindowInit {
 	public JComboBox fontsComboBox = new JComboBox(fonts);
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public JComboBox sizesComboBox = new JComboBox(fontSizes);
+	
+	protected UndoManager undoManager = new UndoManager();
 	
 	
 	/**
@@ -88,12 +92,28 @@ public class WindowInit {
 		toolBar.add(btnSave);
 		
 		JButton btnUndo = new JButton("");
+		btnUndo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(undoManager.canUndo()){
+					undoManager.undo();
+				}
+				
+			}
+		});
 		btnUndo.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnUndo.setToolTipText("Undo");
 		btnUndo.setIcon(new ImageIcon(Main.class.getResource("/icons/undo.png")));
 		toolBar.add(btnUndo);
 		
 		JButton btnRedo = new JButton("");
+		btnRedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(undoManager.canRedo()){
+					undoManager.redo();
+				}
+				
+			}
+		});
 		btnRedo.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnRedo.setToolTipText("Redo");
 		btnRedo.setIcon(new ImageIcon(Main.class.getResource("/icons/redo.png")));
@@ -183,6 +203,7 @@ public class WindowInit {
 		textBody = new JTextArea();
 //		textBody.setFont(new Font("Monospaced", Font.PLAIN, 11));
 		changeTextBodyFont();
+		textBody.getDocument().addUndoableEditListener(undoManager);
 		
 		JScrollPane textBodyScrollPane = new JScrollPane(textBody);
 		GridBagConstraints gbc_textBodyScrollPane = new GridBagConstraints();
