@@ -71,6 +71,10 @@ public class WindowInit {
 		frmJtexteditor.getContentPane().add(toolBar, gbc_toolBar);
 		
 		JButton btnOpen = new JButton("");
+		btnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnOpen.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnOpen.setToolTipText("Open");
 		btnOpen.setSelectedIcon(new ImageIcon(Main.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
@@ -115,6 +119,11 @@ public class WindowInit {
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(5);
 		toolBar.add(horizontalStrut_1);
+		tglbtnBold.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tglbtnItalics.setSelected(false);
+			}
+		});
 			
 		tglbtnBold.setToolTipText("Bold");
 		tglbtnBold.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -124,6 +133,11 @@ public class WindowInit {
 		
 		Component horizontalStrut_2 = Box.createHorizontalStrut(5);
 		toolBar.add(horizontalStrut_2);
+		tglbtnItalics.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tglbtnBold.setSelected(false);
+			}
+		});
 		
 		tglbtnItalics.setToolTipText("Italics");
 		tglbtnItalics.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -142,12 +156,12 @@ public class WindowInit {
 		Component horizontalStrut_4 = Box.createHorizontalStrut(5);
 		toolBar.add(horizontalStrut_4);
 		
-		JButton btnNewButton = new JButton("Apply");
-		btnNewButton.setIcon(new ImageIcon(WindowInit.class.getResource("/icons/apply.png")));
-		btnNewButton.setForeground(Color.BLACK);
-		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton.setToolTipText("Apply Changes");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnApplyButton = new JButton("Apply");
+		btnApplyButton.setIcon(new ImageIcon(WindowInit.class.getResource("/icons/apply.png")));
+		btnApplyButton.setForeground(Color.BLACK);
+		btnApplyButton.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnApplyButton.setToolTipText("Apply Font Changes");
+		btnApplyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String font = (String) fontsComboBox.getSelectedItem();
 				String fontSize = (String) sizesComboBox.getSelectedItem();
@@ -155,24 +169,20 @@ public class WindowInit {
 				settings.setValue("FontSize", fontSize);
 				
 				changeTextBodyFont();
+				
+				if(tglbtnWordWrap.isSelected()){
+					textBody.setLineWrap(true);
+				}
+				else{
+					textBody.setLineWrap(false);
+				}
 			}
 		});
-		toolBar.add(btnNewButton);
+		toolBar.add(btnApplyButton);
 
 		textBody = new JTextArea();
 //		textBody.setFont(new Font("Monospaced", Font.PLAIN, 11));
 		changeTextBodyFont();
-		
-		sizesComboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int newFontSize = (sizesComboBox.getSelectedIndex()) + 5;
-				Font currentFont = textBody.getFont();
-				textBody.setFont(currentFont.deriveFont(newFontSize));
-				String text = textBody.getText();
-				textBody.setText(text);
-			}
-		});
 		
 		JScrollPane textBodyScrollPane = new JScrollPane(textBody);
 		GridBagConstraints gbc_textBodyScrollPane = new GridBagConstraints();
@@ -232,10 +242,7 @@ public class WindowInit {
 		else if(tglbtnItalics.isSelected()){
 			newFont = new Font(newFontName, Font.ITALIC, newFontSize);
 		}
-		else if(tglbtnBold.isSelected() && tglbtnItalics.isSelected()){
-			newFont = new Font(newFontName, Font.BOLD + Font.ITALIC, newFontSize);
-		}
-		else if(!(tglbtnBold.isSelected() && tglbtnItalics.isSelected())){
+		else if(!(tglbtnBold.isSelected() || tglbtnItalics.isSelected())){
 			newFont = new Font(newFontName, Font.PLAIN, newFontSize);
 		}
 
